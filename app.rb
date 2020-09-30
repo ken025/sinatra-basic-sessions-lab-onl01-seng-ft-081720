@@ -2,13 +2,19 @@ require_relative 'config/environment'
 
 class App < Sinatra::Base
   
-  get '/' do 
-    
+  configure do
+    enable :sessions
+    set :session, "secret"
+  end
+
+  get '/' do
     erb :index
-  end 
-  
-  post '/checkout' do 
-  @item = params["item"]
-  erb :index
-  end 
+  end
+
+  post '/checkout' do
+    session[:item] = params[:item]
+    @item = params[:item]
+    
+      erb :index
+  end
 end
